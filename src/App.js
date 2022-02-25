@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import service from "./service";
 
 function App() {
+  const [produtos, setProdutos] = useState({});
+  const [vendedores, setVendedores] = useState({});
+
+  useEffect(() => {
+    buscarProdutos();
+    buscarVendedores();
+  }, []);
+
+  const buscarProdutos = async () => {
+    const response = await service.getAllProdutos();
+    setProdutos(response.data[0]);
+  };
+
+  const buscarVendedores = async () => {
+    const response = await service.getAllVendedores();
+    setVendedores(response.data[0]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      Produtos: {JSON.stringify(produtos)}
+      <tr />
+      Vendedores: {JSON.stringify(vendedores)}
     </div>
   );
 }
