@@ -1,18 +1,25 @@
-import axios from 'axios';
-
-const axiosConfig = axios.create({
-    baseURL: "http://127.0.0.1:3333",
-    headers: {
-      'Content-Type': 'application/json'
-    }
-});
+import { GraphQLClient, gql } from 'graphql-request'
+const endpoint = 'http://localhost:3333/graphql'
+const graphQLClient = new GraphQLClient(endpoint)
 
 const service = {
-    getAllProdutos: async () => {
-        return await axiosConfig.get('/produto');
-    },
-    getAllVendedores: async () => {
-        return await axiosConfig.get('/vendedor');
+    getVendedoresEProdutos: async () => {
+        const query = gql`
+        {
+          produtos{
+            id
+            nome
+            marca
+          }
+          vendedores{
+            id
+            nome
+            cpf
+          }
+        }
+      `; 
+        const data = await graphQLClient.request(query);
+        return data;
     }
 };
 

@@ -7,18 +7,13 @@ function App() {
   const [vendedores, setVendedores] = useState({});
 
   useEffect(() => {
-    buscarProdutos();
-    buscarVendedores();
+    buscarVendedoresEProdutos();
   }, []);
 
-  const buscarProdutos = async () => {
-    const response = await service.getAllProdutos();
-    setProdutos(response.data[0]);
-  };
-
-  const buscarVendedores = async () => {
-    const response = await service.getAllVendedores();
-    setVendedores(response.data[0]);
+  const buscarVendedoresEProdutos = async () => {
+    const response = await service.getVendedoresEProdutos();
+    setProdutos(response.produtos[0]);
+    setVendedores(response.vendedores[0]);
   };
 
   return (
